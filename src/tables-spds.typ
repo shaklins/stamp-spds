@@ -1,3 +1,4 @@
+#import "data_stamp.typ": stamp-data
 /* 
      .--------------------------.
      | ГОСТ Р 21.1101-2013 СПДС |
@@ -10,11 +11,25 @@
 #let table-text-size = 10pt // Размер шрифта в таблицах
 
 // Общие переменные
-#let current-page = {context counter(page).final().first()} // Номер текущей страницы
-#let total-pages = {context [#counter(page).display()]} // Количество страниц
+#let total-pages = {context counter(page).final().first()} // Количество страниц
+#let current-page = {context [#counter(page).display()]} // Номер текущей страницы
+
+#let section-pages(end-label) = {
+  context {
+    let end-val = counter(page).at(end-label).first()
+    [#end-val]
+  }
+}
+//Переменная для ячейки компании
+#let company-cell =  {[#stack(
+    dir: ltr,
+    spacing: 5mm,
+    image("logo.jpg", height: 13mm), //закомментить если не надо
+    align(horizon, stamp-data.company)
+  )]}
 
 // Для листов основных комплектов рабочих чертежей, графических документов проектной документации и графических документов по инженерным изысканиям (Форма 3)
-#let form3 = {
+#let form3(name-paper: "",format: "A4", end-label: none) = {
   show table.cell: set text(size: table-text-size) // Размер шрифта текущей таблицы
   
   table( // ИЗМЕНИЛ: Добавил переменную
@@ -26,26 +41,26 @@
     stroke: thick-table-borders, // Толщина границ таблицы
 
     // Общие поля
-    table.cell(x: 6, y: 0, colspan: 4, rowspan: 2)[(1)],
-    table.cell(x: 6, y: 2, colspan: 4, rowspan: 3)[(2)],
-    table.cell(x: 6, y: 5, colspan: 1, rowspan: 3)[(3)],
-    table.cell(x: 6, y: 8, colspan: 1, rowspan: 3)[(4)],
-    table.cell(x: 7, y: 8, colspan: 3, rowspan: 3)[(9)],
+    table.cell(x: 6, y: 0, colspan: 4, rowspan: 2)[#stamp-data.project-name],
+    table.cell(x: 6, y: 2, colspan: 4, rowspan: 3)[#stamp-data.adres],
+    table.cell(x: 6, y: 5, colspan: 1, rowspan: 3)[#stamp-data.chapter],
+    table.cell(x: 6, y: 8, colspan: 1, rowspan: 3)[#name-paper],
+    table.cell(x: 7, y: 8, colspan: 3, rowspan: 3)[#company-cell],
 
     table.cell(x: 7, y: 5, colspan: 1, rowspan: 1)[Стадия],
-    table.cell(x: 7, y: 6, colspan: 1, rowspan: 2)[(6)],
+    table.cell(x: 7, y: 6, colspan: 1, rowspan: 2)[#stamp-data.stage],
     table.cell(x: 8, y: 5, colspan: 1, rowspan: 1)[Лист],
     table.cell(x: 8, y: 6, colspan: 1, rowspan: 2)[#current-page],
     table.cell(x: 9, y: 5, colspan: 1, rowspan: 1)[Листов],
-    table.cell(x: 9, y: 6, colspan: 1, rowspan: 2)[#total-pages],
+    table.cell(x: 9, y: 6, colspan: 1, rowspan: 2)[#section-pages(end-label)],
 
     // Дополнительное
-    table.cell(x: 0, y: 2, rowspan: 1, colspan: 1)[(14)],
-    table.cell(x: 1, y: 2, rowspan: 1, colspan: 1)[(15)],
-    table.cell(x: 2, y: 2, rowspan: 1, colspan: 1)[(16)],
-    table.cell(x: 3, y: 2, rowspan: 1, colspan: 1)[(17)],
-    table.cell(x: 4, y: 2, rowspan: 1, colspan: 1)[(18)],
-    table.cell(x: 5, y: 2, rowspan: 1, colspan: 1)[(19)],
+    table.cell(x: 0, y: 2, rowspan: 1, colspan: 1)[],
+    table.cell(x: 1, y: 2, rowspan: 1, colspan: 1)[],
+    table.cell(x: 2, y: 2, rowspan: 1, colspan: 1)[],
+    table.cell(x: 3, y: 2, rowspan: 1, colspan: 1)[],
+    table.cell(x: 4, y: 2, rowspan: 1, colspan: 1)[],
+    table.cell(x: 5, y: 2, rowspan: 1, colspan: 1)[],
     
     // Должность, ФИО, Подпись, Дата
     table.cell(x: 0, y: 4, rowspan: 1, colspan: 1)[Изм.],
@@ -55,33 +70,35 @@
     table.cell(x: 4, y: 4, rowspan: 1, colspan: 1)[Подп.],
     table.cell(x: 5, y: 4, rowspan: 1, colspan: 1)[Дата],
 
-    table.cell(x: 0, y: 5, rowspan: 1, colspan: 2)[Разраб.],
-    table.cell(x: 0, y: 6, rowspan: 1, colspan: 2)[],
-    table.cell(x: 0, y: 7, rowspan: 1, colspan: 2)[(10)],
-    table.cell(x: 0, y: 8, rowspan: 1, colspan: 2)[],
-    table.cell(x: 0, y: 9, rowspan: 1, colspan: 2)[Н.контр.],
-    table.cell(x: 0, y: 10, rowspan: 1, colspan: 2)[],
+    ..stamp-data.authors.enumerate().map(((i, author)) => (
+    table.cell(
+      x: 0, 
+      y: 5 + i,
+      colspan: 2,
+      align: left + horizon
+    )[#author.role],
 
-    table.cell(x: 2, y: 5, rowspan: 1, colspan: 2)[],
-    table.cell(x: 2, y: 6, rowspan: 1, colspan: 2)[],
-    table.cell(x: 2, y: 7, rowspan: 1, colspan: 2)[(11)],
-    table.cell(x: 2, y: 8, rowspan: 1, colspan: 2)[],
-    table.cell(x: 2, y: 9, rowspan: 1, colspan: 2)[], 
-    table.cell(x: 2, y: 10, rowspan: 1, colspan: 2)[],
+    table.cell(
+      x: 2,
+      y: 5 + i,
+      colspan: 2,
+      align: left + horizon
+    )[#author.name],
 
-    table.cell(x: 4, y: 5, rowspan: 1, colspan: 1)[],
-    table.cell(x: 4, y: 6, rowspan: 1, colspan: 1)[],
-    table.cell(x: 4, y: 7, rowspan: 1, colspan: 1)[(12)],
-    table.cell(x: 4, y: 8, rowspan: 1, colspan: 1)[],
-    table.cell(x: 4, y: 9, rowspan: 1, colspan: 1)[],
-    table.cell(x: 4, y: 10, rowspan: 1, colspan: 1)[],
+    table.cell(
+      x: 4,
+      y: 5 + i,
+      colspan: 1
+    )[#author.sign],
+    
+    table.cell(
+      x: 5,
+      y: 5 + i,
+      colspan: 1
+    )[#author.date],
+    )
+  ).flatten(),
 
-    table.cell(x: 5, y: 5, rowspan: 1, colspan: 1)[], 
-    table.cell(x: 5, y: 6, rowspan: 1, colspan: 1)[], 
-    table.cell(x: 5, y: 7, rowspan: 1, colspan: 1)[(13)], 
-    table.cell(x: 5, y: 8, rowspan: 1, colspan: 1)[],
-    table.cell(x: 5, y: 9, rowspan: 1, colspan: 1)[],
-    table.cell(x: 5, y: 10, rowspan: 1, colspan: 1)[],
 
     // Границы
     ..range(1, 4).map(n => table.hline(y: n, end: 6, stroke: thin-table-borders)), // Фамилии
@@ -90,7 +107,7 @@
     // Формат листа
     table.hline(y: 12, stroke: 0pt), // Нижняя линия
     ..range(0, 11).map(n => table.vline(start: 11, x: n,  stroke: 0pt)), // Вертикальные линии
-    table.cell(x: 7, y: 11, rowspan: 1, colspan: 3, align: left + horizon)[Формат (26)]
+    table.cell(x: 7, y: 11, rowspan: 1, colspan: 3, align: left + horizon)[Формат #format]
   )
 }
 
@@ -186,7 +203,7 @@
 }
 
 // Для эскизных чертежей общих видов нетиповых изделий, всех видов текстовых документов (первый или заглавный лист) (форма 5)
-#let form5 = {
+#let form5(name-paper: "",format: "A4", end-label: none) = {
   show table.cell: set text(size: table-text-size) // Размер шрифта текущей таблицы
   
   table( // ИЗМЕНИЛ: Добавил переменную
@@ -198,25 +215,25 @@
     stroke: thick-table-borders, // Толщина границ таблицы
 
     // Общие поля
-    table.cell(x: 6, y: 0, rowspan: 3, colspan: 4)[(1)],
-    table.cell(x: 6, y: 3, rowspan: 5, colspan: 1)[(5)],
-    table.cell(x: 7, y: 5, rowspan: 3, colspan: 3)[(23)],
+    table.cell(x: 6, y: 0, rowspan: 3, colspan: 4)[#stamp-data.project-name],
+    table.cell(x: 6, y: 3, rowspan: 5, colspan: 1)[#name-paper],
+    table.cell(x: 7, y: 5, rowspan: 3, colspan: 3)[#company-cell],
 
 
     table.cell(x: 7, y: 3, rowspan: 1, colspan: 1)[Стадия],
-    table.cell(x: 7, y: 4, rowspan: 1, colspan: 1)[(6)],
+    table.cell(x: 7, y: 4, rowspan: 1, colspan: 1)[#stamp-data.stage],
     table.cell(x: 8, y: 3, rowspan: 1, colspan: 1)[Лист],
     table.cell(x: 8, y: 4, rowspan: 1, colspan: 1)[#current-page],
     table.cell(x: 9, y: 3, rowspan: 1, colspan: 1)[Листов],
     table.cell(x: 9, y: 4, rowspan: 1, colspan: 1)[#total-pages],
 
     // Дополнительное
-    table.cell(x: 0, y: 1, rowspan: 1, colspan: 1)[(14)],
-    table.cell(x: 1, y: 1, rowspan: 1, colspan: 1)[(15)],
-    table.cell(x: 2, y: 1, rowspan: 1, colspan: 1)[(16)],
-    table.cell(x: 3, y: 1, rowspan: 1, colspan: 1)[(17)],
-    table.cell(x: 4, y: 1, rowspan: 1, colspan: 1)[(18)],
-    table.cell(x: 5, y: 1, rowspan: 1, colspan: 1)[(19)],
+    table.cell(x: 0, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 1, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 2, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 3, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 4, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 5, y: 1, rowspan: 1, colspan: 1)[],
     
     // Должность, ФИО, Подпись, Дата
     table.cell(x: 0, y: 2, rowspan: 1, colspan: 1)[Изм.],
@@ -226,29 +243,35 @@
     table.cell(x: 4, y: 2, rowspan: 1, colspan: 1)[Подп.],
     table.cell(x: 5, y: 2, rowspan: 1, colspan: 1)[Дата],
 
-    table.cell(x: 0, y: 3, rowspan: 1, colspan: 2)[Разраб.],
-    table.cell(x: 0, y: 4, rowspan: 1, colspan: 2)[],
-    table.cell(x: 0, y: 5, rowspan: 1, colspan: 2)[(10)],
-    table.cell(x: 0, y: 6, rowspan: 1, colspan: 2)[Н.контр.],
-    table.cell(x: 0, y: 7, rowspan: 1, colspan: 2)[],
+    ..stamp-data.authors.enumerate().map(((i, author)) => (
+    table.cell(
+      x: 0, 
+      y: 3 + i,
+      colspan: 2,
+      align: left + horizon
+    )[#author.role],
 
-    table.cell(x: 2, y: 3, rowspan: 1, colspan: 2)[],
-    table.cell(x: 2, y: 4, rowspan: 1, colspan: 2)[],
-    table.cell(x: 2, y: 5, rowspan: 1, colspan: 2)[(11)],
-    table.cell(x: 2, y: 6, rowspan: 1, colspan: 2)[],
-    table.cell(x: 2, y: 7, rowspan: 1, colspan: 2)[], 
+    table.cell(
+      x: 2,
+      y: 3 + i,
+      colspan: 2,
+      align: left + horizon
+    )[#author.name],
 
-    table.cell(x: 4, y: 3, rowspan: 1, colspan: 1)[],
-    table.cell(x: 4, y: 4, rowspan: 1, colspan: 1)[],
-    table.cell(x: 4, y: 5, rowspan: 1, colspan: 1)[(12)],
-    table.cell(x: 4, y: 6, rowspan: 1, colspan: 1)[],
-    table.cell(x: 4, y: 7, rowspan: 1, colspan: 1)[],
+    table.cell(
+      x: 4,
+      y: 3 + i,
+      colspan: 1
+    )[#author.sign],
+    
+    table.cell(
+      x: 5,
+      y: 3 + i,
+      colspan: 1
+    )[#author.date],
+    )
+  ).flatten(),
 
-    table.cell(x: 5, y: 3, rowspan: 1, colspan: 1)[], 
-    table.cell(x: 5, y: 4, rowspan: 1, colspan: 1)[], 
-    table.cell(x: 5, y: 5, rowspan: 1, colspan: 1)[(13)], 
-    table.cell(x: 5, y: 6, rowspan: 1, colspan: 1)[],
-    table.cell(x: 5, y: 7, rowspan: 1, colspan: 1)[],
 
     // Границы
     ..range(1, 2).map(n => table.hline(y: n, end: 6, stroke: thin-table-borders)), 
@@ -257,12 +280,12 @@
     // Формат листа
     table.hline(y: 9, stroke: 0pt), // Нижняя линия
     ..range(0, 11).map(n => table.vline(start: 8, x: n,  stroke: 0pt)), // Вертикальные линии
-    table.cell(x: 7, y: 8, rowspan: 1, colspan: 3, align: left + horizon)[Формат (26)]
+    table.cell(x: 7, y: 8, rowspan: 1, colspan: 3, align: left + horizon)[Формат #format]
   )
 }
 
 // Для чертежей строительных изделий, эскизных чертежей общих видов нетиповых изделий и всех видов текстовых документов (последующие листы) (форма 6)
-#let form6 = {
+#let form6(format: "A4") = {
   show table.cell: set text(size: table-text-size) // Размер шрифта текущей таблицы
   
   table( // ИЗМЕНИЛ: Добавил переменную
@@ -274,7 +297,7 @@
     stroke: thick-table-borders, // Толщина границ таблицы
 
     // Общие поля
-    table.cell(x: 6, y: 0, rowspan: 3, colspan: 1)[(1)],
+    table.cell(x: 6, y: 0, rowspan: 3, colspan: 1)[#stamp-data.project-name],
 
     // Лист
     table.cell(x: 7, y: 0, rowspan: 3, colspan: 1, inset: 0.1mm)[
@@ -296,12 +319,12 @@
     table.cell(x: 4, y: 2, rowspan: 1, colspan: 1)[Подп.],
     table.cell(x: 5, y: 2, rowspan: 1, colspan: 1)[Дата],
 
-    table.cell(x: 0, y: 1, rowspan: 1, colspan: 1)[(14)],
-    table.cell(x: 1, y: 1, rowspan: 1, colspan: 1)[(15)],
-    table.cell(x: 2, y: 1, rowspan: 1, colspan: 1)[(16)],
-    table.cell(x: 3, y: 1, rowspan: 1, colspan: 1)[(17)],
-    table.cell(x: 4, y: 1, rowspan: 1, colspan: 1)[(18)],
-    table.cell(x: 5, y: 1, rowspan: 1, colspan: 1)[(19)],
+    table.cell(x: 0, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 1, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 2, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 3, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 4, y: 1, rowspan: 1, colspan: 1)[],
+    table.cell(x: 5, y: 1, rowspan: 1, colspan: 1)[],
     
     // Границы
     ..range(1, 2).map(n => table.hline(y: n, end: 6, stroke: thin-table-borders)), // Фамилии
@@ -313,8 +336,7 @@
       #place(
         right + horizon,
         dx: -29mm,
-        "Формат (26)"
-      )
+      )[Формат #format]
     ]
   )
 }
