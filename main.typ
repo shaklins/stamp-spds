@@ -1,11 +1,11 @@
-#import "src/template.typ": spds-frame
-#import "src/tables-spds.typ": form3,form5,form6
+#import "template/template.typ": spds-frame
+#import "template/tables-spds.typ": form3,form5,form6
 
 #set text(font: "ISOCPEUR")
 #set par(first-line-indent: 1.5em, justify: true)
 #set par(spacing: 1em)
 
-#include("src/front_page_cover.typ")
+#include("content/front_page_cover.typ")
 
 #set page(paper:"a4")
 
@@ -14,10 +14,10 @@
 #counter(page).update(1)
 
 #show: spds-frame.with(format-table:"Форма 3", name-paper:"Общие данные",format:"A4", end-label:<end-sec-1>)
-#include("src/sheet_draw.typ")
+#include("content/sheet_draw.typ")
 #pagebreak()
 
-#include("src/sheet_link_doc.typ")
+#include("content/sheet_link_doc.typ")
 
 #pagebreak()
 #align(center)[= Общие указания]

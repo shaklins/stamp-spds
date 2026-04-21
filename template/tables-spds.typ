@@ -1,4 +1,4 @@
-#import "data_stamp.typ": stamp-data
+#import "../config/data_stamp.typ": stamp-data
 /* 
      .--------------------------.
      | ГОСТ Р 21.1101-2013 СПДС |

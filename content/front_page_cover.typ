@@ -1,5 +1,5 @@
-#import "data_stamp.typ": stamp-data
-#import "frame.typ": document-frame
+#import "../config/data_stamp.typ": stamp-data
+#import "../template/frame.typ": document-frame
 
 #set page(
   paper:"a4",
