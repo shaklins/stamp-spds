@@ -1,5 +1,3 @@
-#import "tables-spds.typ" as spds-tables
-
 #let place-table(table-type, table-form6, body) = {
   set page(
     footer: context{
@@ -16,7 +14,7 @@
       place(
         left + bottom,
         dx: -10mm + base-side - 20mm - 185mm - 5mm, // Для корректного размещения на всех форматах
-        dy: -5mm,
+        dy: 0mm,
         table-render
       )
     },

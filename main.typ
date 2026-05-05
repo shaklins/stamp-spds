@@ -62,19 +62,16 @@
 
 #set page(paper:"a3", flipped: true)
 #show: spds-frame.with(format-table:"Форма 3", name-paper:"Кабельный журнал",format:"A3", end-label:<end-sec-3>)
-= A3 SPDS Form 3
 
-#lorem(100)
-
+#include("content/cable_journal_form_1.typ")
 <end-sec-3>
 
 #pagebreak()
 #counter(page).update(1)
 
 #show: spds-frame.with(format-table:"Форма 3", name-paper:"Спецификация",format:"A3", end-label:<end-sec-4>)
-= A3 SPDS Form 6
 
-#lorem(100)
-#pagebreak()
+#include("content/spec.typ")
 
 <end-sec-4>
+#pagebreak()

@@ -24,7 +24,7 @@
 #let company-cell =  {[#stack(
     dir: ltr,
     spacing: 5mm,
-    image("logo.jpg", height: 13mm), //закомментить если не надо
+    image("../config/logo.jpg", height: 13mm), //закомментить если не надо
     align(horizon, stamp-data.company)
   )]}
 

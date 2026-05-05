@@ -15,7 +15,7 @@
 #place(
   left + top,
   dy: -5mm,
-  image("logo.jpg",height:10mm)
+  image("../config/logo.jpg",height:10mm)
 )
 
 #place(
@@ -44,7 +44,7 @@
 #place(
   left + top,
   dy: -5mm,
-  image("logo.jpg",height:10mm)
+  image("../config/logo.jpg",height:10mm)
 )
 
 #place(

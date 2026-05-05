@@ -3,7 +3,7 @@
   let (width, height) = if page.flipped { (page.height, page.width) } else { (page.width, page.height) }
   rect(
       width: width - 5mm - 20mm,
-      height: height - 10mm - 5mm,
+      height: height - 5mm - 5mm,
       stroke: 0.5mm + black,
     )
 }
@@ -12,7 +12,7 @@
   place(
     right+bottom,
     dx: -5mm,
-    dy: -10mm,
+    dy: -5mm,
     border-params
   )
 }

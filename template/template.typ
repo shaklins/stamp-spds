@@ -22,7 +22,7 @@
         left: 30mm,
         right: 10mm,
         top : 20mm,
-        bottom: 20mm + table-height,
+        bottom: 5mm + table-height,
       ),
       background: document-frame
     )
