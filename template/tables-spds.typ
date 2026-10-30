@@ -14,22 +14,16 @@
 #let total-pages = {context counter(page).final().first()} // Количество страниц
 #let current-page = {context [#counter(page).display()]} // Номер текущей страницы
 
-#let section-pages(end-label) = {
-  context {
-    let end-val = counter(page).at(end-label).first()
-    [#end-val]
-  }
-}
 //Переменная для ячейки компании
 #let company-cell =  {[#stack(
     dir: ltr,
     spacing: 5mm,
-    image("../config/logo.jpg", height: 13mm), //закомментить если не надо
-    align(horizon, stamp-data.company)
+    image("../config/logo.jpg", height: 12mm), //закомментить если не надо
+    //align(horizon, stamp-data.company)
   )]}
 
 // Для листов основных комплектов рабочих чертежей, графических документов проектной документации и графических документов по инженерным изысканиям (Форма 3)
-#let form3(name-paper: "",format: "A4", end-label: none) = {
+#let form3(name-paper: "",format: "A4") = {
   show table.cell: set text(size: table-text-size) // Размер шрифта текущей таблицы
   
   table( // ИЗМЕНИЛ: Добавил переменную
@@ -52,7 +46,7 @@
     table.cell(x: 8, y: 5, colspan: 1, rowspan: 1)[Лист],
     table.cell(x: 8, y: 6, colspan: 1, rowspan: 2)[#current-page],
     table.cell(x: 9, y: 5, colspan: 1, rowspan: 1)[Листов],
-    table.cell(x: 9, y: 6, colspan: 1, rowspan: 2)[#section-pages(end-label)],
+    table.cell(x: 9, y: 6, colspan: 1, rowspan: 2)[#total-pages],
 
     // Дополнительное
     table.cell(x: 0, y: 2, rowspan: 1, colspan: 1)[],
@@ -203,7 +197,7 @@
 }
 
 // Для эскизных чертежей общих видов нетиповых изделий, всех видов текстовых документов (первый или заглавный лист) (форма 5)
-#let form5(name-paper: "",format: "A4", end-label: none) = {
+#let form5(name-paper: "",format: "A4") = {
   show table.cell: set text(size: table-text-size) // Размер шрифта текущей таблицы
   
   table( // ИЗМЕНИЛ: Добавил переменную

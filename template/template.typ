@@ -3,7 +3,7 @@
 #import "frame.typ": document-frame
 
 
-#let spds-frame(format-table:"Форма 3", name-paper:"",format:"A4", end-label:none, body) = context {
+#let spds-frame(format-table:"Форма 3", name-paper:"",format:"A4",  body) = context {
   let forms = (
     "Форма 3" : spds-tables.form3,
     "Форма 4" : spds-tables.form4,
@@ -12,7 +12,6 @@
   let table-type = forms.at(format-table)(
       name-paper: name-paper, 
       format: format, 
-      end-label: end-label
     )
   let table-form6 = spds-tables.form6(format:format)
 
