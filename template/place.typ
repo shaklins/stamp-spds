@@ -5,16 +5,16 @@
       let base-side = if is-flipped { page.height } else { page.width }
       let page-num = counter(page).get().first()
 
-      let table-render = if page-num == 1 {
-        table-type
+      let (table-render, offset-y) = if page-num == 1 {
+        (table-type, -30mm)
       } else {
-        table-form6
+        (table-form6, 0mm)
       }
 
       place(
         left + bottom,
         dx: -10mm + base-side - 20mm - 185mm - 5mm, // Для корректного размещения на всех форматах
-        dy: 0mm,
+        dy: offset-y,
         table-render
       )
     },

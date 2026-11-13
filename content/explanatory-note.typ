@@ -9,6 +9,8 @@
 
 #show: spds-frame.with(format-table:"Форма 3", name-paper:"Пояснительная записка",format:"A4")
 
+#place(bottom, float: true, clearance: 0pt, v(30mm))
+
 #align(center)[= Пояснительная записка]
 #lorem(0)
 
