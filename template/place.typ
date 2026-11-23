@@ -26,7 +26,7 @@
   )
 
   // Освобождаем место под таблицу первого листа (действует только на первую страницу).
-  place(bottom, float: true, clearance: 0pt, v(first-page-table-offset))
+  place(bottom, float: true, clearance: 0pt, v(first-page-table-offset+5mm))
 
   body
 }

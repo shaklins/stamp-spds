@@ -1,5 +1,4 @@
-#import "../template/template.typ": spds-frame
-#import "../template/tables-spds.typ": form3,form5,form6
+#import "template/template.typ": spds-frame
 
 #set text(font: "ISOCPEUR")
 #set par(first-line-indent: 1.5em, justify: true)
@@ -26,8 +25,10 @@
   )
 }
 
+#let spec-rows = csv("data/equipment-spec.csv", row-type: array).slice(1)
+
 #pad(left: -10mm, top: -15mm)[
   #spec(
-    ..([1],[name],[type],[code],[manuf],[ed],[5],[weight],[comment],)*90
+    ..spec-rows.flatten()
   )
 ]

@@ -1,3 +1,5 @@
+#let rows = csv("../data/drawing-list.csv", row-type: array).slice(1)
+
 #align(center)[= Ведомость рабочих чертежей основного комлекта]
 #pad(left: -10mm)[
 #show table.cell.where(y: 0): set align(center)
@@ -6,8 +8,6 @@
   align: horizon,
   rows: (8mm),
   [Обозначение],[Наименование],[Примечание],
-  [.ОД],[Общие данные],[],
-  [.ПЗ],[Пояснительная записка],[],
-  [.ЭЧ],[Чертежи],[]
+  ..rows.flatten()
   )
 ]

@@ -1,0 +1,40 @@
+# Сборка всех документов в один PDF: pdf/stamp-spds.pdf
+#
+# Запуск (Windows):      mingw32-make -f Makefile.merged
+# Запуск (Linux/macOS):  make -f Makefile.merged
+# Очистка:               mingw32-make -f Makefile.merged clean
+#
+# Документы собираются по отдельности, затем склеиваются скриптом
+# tools/merge_pdf.py (требуется пакет pypdf: python -m pip install pypdf).
+
+TYPST   ?= typst
+PYTHON  ?= python
+ROOT    ?= .
+OUT     ?= pdf
+MERGED  := $(OUT)/stamp-spds.pdf
+MERGER  := tools/merge_pdf.py
+
+SOURCES := 01-cover-title.typ 02-general-data.typ 03-explanatory.typ \
+           04-cable-journal.typ 05-specification.typ
+
+PARTS := $(patsubst %.typ,$(OUT)/%.pdf,$(SOURCES))
+
+DEPS := $(wildcard template/*.typ config/*.typ config/*.jpg) \
+        $(wildcard sections/*.typ) $(wildcard data/*.csv)
+
+.PHONY: all clean
+
+all: $(MERGED)
+	@echo "Готово: $(MERGED)"
+
+$(MERGED): $(PARTS) $(MERGER)
+	$(PYTHON) "$(MERGER)" "$@" $(PARTS)
+
+$(OUT)/%.pdf: %.typ $(DEPS) | $(OUT)
+	$(TYPST) compile --root $(ROOT) "$<" "$@"
+
+$(OUT):
+	@if not exist "$(OUT)" mkdir "$(OUT)"
+
+clean:
+	@if exist "$(OUT)" rmdir /s /q "$(OUT)"

@@ -1,5 +1,5 @@
-#import "../config/data_stamp.typ": stamp-data
-#import "../template/frame.typ": document-frame
+#import "config/data_stamp.typ": stamp-data
+#import "template/frame.typ": document-frame
 
 #set page(
   paper:"a4",
@@ -15,7 +15,7 @@
 #place(
   left + top,
   dy: -5mm,
-  image("../config/logo.jpg",height:10mm)
+  image("config/logo.jpg",height:10mm)
 )
 
 #place(
@@ -44,7 +44,7 @@
 #place(
   left + top,
   dy: -5mm,
-  image("../config/logo.jpg",height:10mm)
+  image("config/logo.jpg",height:10mm)
 )
 
 #place(

@@ -1,5 +1,4 @@
-#import "../template/template.typ": spds-frame
-#import "../template/tables-spds.typ": form3,form5,form6
+#import "template/template.typ": spds-frame
 
 #set text(font: "ISOCPEUR")
 #set par(first-line-indent: 1.5em, justify: true)
